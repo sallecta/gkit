@@ -1,8 +1,6 @@
 # gkit is forked from  [gabrield/stk](https://github.com/gabrield/stk)
 
-gkit - Small Graphical toolkit based on Xlib;
-
-gkit is a small Graphical toolkit for desktop applications.
+gkit - Small Graphical toolkit based on Xlib for desktop applications.
 
 ## Build instructions
 ### Build common object files:
