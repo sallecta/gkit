@@ -1,16 +1,16 @@
 #include <stk_progress_bar.h>
 
 
-stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, uint h, char *label)
+gkit_widget *stk_progress_bar_new(gkit_widget *parent_win, int x, int y, uint w, uint h, char *label)
 {
-    stk_widget *new_pb  = (stk_widget*) malloc(sizeof(stk_widget));
+    gkit_widget *new_pb  = (gkit_widget*) malloc(sizeof(gkit_widget));
     stk_progress_bar *pb  = (stk_progress_bar*) malloc(sizeof(stk_progress_bar));
     int screen;
 
     XGCValues gcval;
     long fg, bg;
     
-    memset(new_pb, 0, sizeof(stk_widget));
+    memset(new_pb, 0, sizeof(gkit_widget));
     
     new_pb->dsp = display;
     new_pb->fontname = "7x13";
@@ -78,7 +78,7 @@ stk_widget *stk_progress_bar_new(stk_widget *parent_win, int x, int y, uint w, u
 }
 
 
-void stk_progress_bar_expose(stk_widget *pb)
+void stk_progress_bar_expose(gkit_widget *pb)
 {
     int width, wcenter, hcenter,
                             len;
@@ -103,7 +103,7 @@ void stk_progress_bar_expose(stk_widget *pb)
 }
 
 
-void stk_progress_bar_set_label(stk_widget *pb, char *new_label)
+void stk_progress_bar_set_label(gkit_widget *pb, char *new_label)
 {
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
 
@@ -113,14 +113,14 @@ void stk_progress_bar_set_label(stk_widget *pb, char *new_label)
 }
 
 
-uint stk_progress_bar_get_value(stk_widget *pb)
+uint stk_progress_bar_get_value(gkit_widget *pb)
 {    
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
     return spb->pct;
 }
 
 
-void stk_progress_bar_set_value(stk_widget *pb, uint pct)
+void stk_progress_bar_set_value(gkit_widget *pb, uint pct)
 {
     stk_progress_bar *spb = (stk_progress_bar*)pb->ext_struct;
     spb->pct = pct;
@@ -128,7 +128,7 @@ void stk_progress_bar_set_value(stk_widget *pb, uint pct)
 }
 
 
-void stk_progress_bar_redraw(int dtype, stk_widget *pb)
+void stk_progress_bar_redraw(int dtype, gkit_widget *pb)
 { 
 
     switch(dtype)
@@ -153,7 +153,7 @@ void stk_progress_bar_redraw(int dtype, stk_widget *pb)
 
 void stk_progress_bar_handle(STKEvent *event, void *warg)
 {
-    stk_widget *wg = (stk_widget*)warg;
+    gkit_widget *wg = (gkit_widget*)warg;
   
     wg->ev  = event;
     

@@ -1,17 +1,17 @@
 #include <stk_button.h>
 
 
-stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
+gkit_widget *stk_button_new(gkit_widget *parent_win, int x, int y, uint w, uint h,
                                   char *label, void (*func)(void*), void *args)
 {
-    stk_widget *new_bt  = (stk_widget*) malloc(sizeof(stk_widget));
+    gkit_widget *new_bt  = (gkit_widget*) malloc(sizeof(gkit_widget));
     int screen;
 
     XGCValues gcval;
     long fg, bg;
     XSetWindowAttributes setwinattr;
     
-    memset(new_bt, 0, sizeof(stk_widget));
+    memset(new_bt, 0, sizeof(gkit_widget));
     
     
     new_bt->dsp = display;
@@ -74,7 +74,7 @@ stk_widget *stk_button_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 }
 
 
-void stk_button_expose(stk_widget *bt)
+void stk_button_expose(gkit_widget *bt)
 {
     int   width, wcenter, hcenter;
     XClearWindow(bt->dsp, bt->win);
@@ -93,7 +93,7 @@ void stk_button_expose(stk_widget *bt)
 }
 
 
-void stk_button_redraw(int dtype, stk_widget *bt)
+void stk_button_redraw(int dtype, gkit_widget *bt)
 { 
 
     switch(dtype)
@@ -121,9 +121,9 @@ void stk_button_redraw(int dtype, stk_widget *bt)
 
 
 
-void stk_button_handle(STKEvent *event, void *warg)
+void stk_button_handle(GKITEvent *event, void *warg)
 {
-    stk_widget *wg = (stk_widget*)warg;
+    gkit_widget *wg = (gkit_widget*)warg;
     
     wg->ev  = event;
     

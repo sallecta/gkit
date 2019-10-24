@@ -1,61 +1,62 @@
-#include <stk_window.h>
+#include <gkit_window.h>
+#include <gkit_widget_canvas.h>
 #include <stk_button.h>
 #include <stk_text.h>
 #include <stk_progress_bar.h>
-#include <stk_canvas.h>
 #include <stk_menu.h>
 
-typedef struct 
+
+
+
+
+
+void listen(void *arg)
 {
-    void *d1;
-    int c, x, y;
-} ptr;
+    gkit_widget *c = (gkit_widget*)arg;
+    char coords[10] = {0};
+    sprintf(coords, "%dx%d", c->ev->xbutton.x, c->ev->xbutton.y);
+    printf("%dx%d\n", c->ev->xbutton.x, c->ev->xbutton.y);
+    gkit_widget_canvas_draw_string(c, c->ev->xbutton.x, c->ev->xbutton.y, coords);
+}
 
 
-void draw(void *c)
+
+void draw(void *arg)
 {
     int i = 0;
-    
-    stk_widget *p = (stk_widget*)c;
-    stk_canvas_draw_arc(p, 80, 70, 300, 100, 100, 360*64);
-    stk_canvas_draw_line(p, 10, 10, 100, 100);
-    stk_canvas_draw_string(p, 50, 50, "50x50");
+    gkit_widget *c = (gkit_widget*)arg;
+    gkit_widget_canvas_draw_arc(c, 80, 70, 300, 100, 100, 360*64);
+    gkit_widget_canvas_draw_line(c, 10, 10, 100, 100);
+    gkit_widget_canvas_draw_string(c, 70, 70, "draw.gkit_widget_canvas_draw_string");
 
     for(i = 350; i > 200; i--)
-        stk_canvas_draw_point(p, 100+i, i-150);        
+        gkit_widget_canvas_draw_point(c, 100+i, i-150);        
 }
-
-void listen(void *c)
-{
-    stk_widget *p = (stk_widget*)c;
-    char coords[10] = {0};
-    printf("listen: %dx%d\n", p->ev->xbutton.x, p->ev->xbutton.y);
-    stk_canvas_draw_string(p, p->ev->xbutton.x, p->ev->xbutton.y, coords);
-}
-
-
 
 
 int main()
 {
-    stk_widget *myCanvas,
-			   *win;
+    gkit_widget *myCanvas, *myWin;
 
 
     stk_init();
     
-    win = stk_window_new(500, 500, 800, 600, "test-canvas.c");
+    myWin = gkit_window_new(500, 500, 800, 600, "test-canvas.c");
 
-    myCanvas  = stk_canvas_new(win, 10, 10, 780, 580);
+    myCanvas  = gkit_widget_canvas_new(myWin, 10, 10, 780, 580);
     
-    stk_widget_event_listen_add(myCanvas, STK_WIDGET_MOVE, listen, (void*)myCanvas);
-    stk_widget_event_listen_add(myCanvas, STK_WIDGET_PRESS, listen, (void*)myCanvas);
+    gkit_widget_event_listen_add(myCanvas, GKIT_EVENT_MOVE, listen, (void*)myCanvas);
+    gkit_widget_event_listen_add(myCanvas, GKIT_EVENT_PRESS, listen, (void*)myCanvas);
 
-    stk_canvas_draw_arc(myCanvas, 50, 70, 150, 150, 10, 360*64);
-    
+    gkit_widget_canvas_draw_arc(myCanvas, 50, 70, 150, 150, 10, 360*64);
+	
+
+	draw(myCanvas);
+    printf("GKIT_PLATFORM: %s\n", GKIT_PLATFORM);
+	printf("GKIT_VERSION: %s\n", GKIT_VERSION);
 
 
-    stk_window_show(win);
+    gkit_window_show(myWin);
 
     stk_run();
     

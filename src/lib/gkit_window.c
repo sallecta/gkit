@@ -1,11 +1,11 @@
-#include <stk_window.h>
+#include <gkit_window.h>
 
-stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title)
+gkit_widget *gkit_window_new(int x, int y, uint w, uint h, const char *title)
 {
-    stk_widget *new_win  = (stk_widget*) malloc(sizeof(stk_widget));
+    gkit_widget *new_win  = (gkit_widget*) malloc(sizeof(gkit_widget));
     Atom del_win;
     
-    memset(new_win, 0, sizeof(stk_widget));
+    memset(new_win, 0, sizeof(gkit_widget));
     
     new_win->dsp = display;
 
@@ -32,10 +32,10 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title)
         new_win->h = h;
 
 
-        new_win->handler = &stk_window_handle;
+        new_win->handler = &gkit_window_handle;
 
         if(title)
-            stk_window_set_title(new_win, title);
+            gkit_window_set_title(new_win, title);
 
         new_win->gc = XCreateGC(display, new_win->win, 0, 0);
 
@@ -48,20 +48,20 @@ stk_widget *stk_window_new(int x, int y, uint w, uint h, const char *title)
 }
 
 
-void stk_window_set_pos(stk_widget *win, uint x, uint y)
+void gkit_window_set_pos(gkit_widget *win, uint x, uint y)
 {
   stk_widget_set_pos(win, x, y);
 }    
 
-void stk_window_set_color(stk_widget *win, int color)
+void gkit_window_set_color(gkit_widget *win, int color)
 {
     stk_widget_set_color(win, color);
 }
 
-void stk_window_handle(STKEvent *event, void *warg)
+void gkit_window_handle(GKITEvent *event, void *warg)
 {
-  stk_widget *wg = (stk_widget*)warg;
-  stk_widget *wroot = stk_widget_root();
+  gkit_widget *wg = (gkit_widget*)warg;
+  gkit_widget *wroot = stk_widget_root();
 
   switch(event->type)
   {
@@ -95,14 +95,14 @@ void stk_window_handle(STKEvent *event, void *warg)
   }
 }
 
-void stk_window_show(stk_widget *win)
+void gkit_window_show(gkit_widget *win)
 {
     XMapWindow(win->dsp, win->win);
     XFlush(win->dsp);
 }
 
 
-void stk_window_set_title(stk_widget *win, const char *title)
+void gkit_window_set_title(gkit_widget *win, const char *title)
 {
     /* This variable will store the newly created property. */
     XTextProperty window_title_property;

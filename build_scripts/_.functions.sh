@@ -82,17 +82,51 @@ Clean build directory
 
 "
 }
+#source config functions
+fn_configwrite() {
+   errors=""
+   fn_echobold "Writng library config file: \"$libconfigfile\""
+   #libversion=$(head --lines 1 $libversionfile)
+	if [ ! -f "$libversionfile" ]; then
+			errors="$errors \n  - file \"$libversionfile\" not exist;"
+	fi
+	libversion=$(head --lines 1 $libversionfile)
+	if [ -f "$libversionfile" ] && [ "$libversion" = "" ]; then
+			errors="$errors \n  - file \"$libversionfile\" contains empty 1st line (must be version string);"
+	fi
+	if [ "$libconfigfile" = "" ]; then
+			errors="$errors \n  - libconfigfile variable not set;"
+	fi		
+	if [ "$libplatform" = "notset" ]; then
+			errors="$errors \n  - libplatform variable not set;"
+	fi	
+	#final steps
+	if [ !  "$errors" = "" ]; then
+			printf " [\n"
+			printf "  Function failed failed due to errors: $errors"
+			printf "\n ]\n"
+			exit
+	else
+	    echo "    libversion $libversion"
+		echo "#define GKIT_VERSION        \"$libversion\"" > $libconfigfile
+		fn_stoponerror "$?" $LINENO
+		echo "    libplatform $libplatform"
+		echo "#define GKIT_PLATFORM     \"$libplatform\"" >> $libconfigfile
+		fn_stoponerror "$?" $LINENO
+		
+	fi	
+}
+
 #gcc functions
 
 fn_buildobjs() {
-    fn_dirEnsure "$dirbuild/objs"
-    buildobjs_Parameters="-c -g -I$dirsrc -pedantic -Wall"
-	for file in "${objFiles[@]}"
-	do
-	   :
+    fn_dirEnsure "$dirbuildobjs"
+    buildobjs_Parameters="-c -g -I$dirsrc/lib -pedantic -Wall"
+	for file in "${libFiles[@]}"
+	do :
 	   printf "\n"
 	   fn_echobold "creating object from \"$file\""
-	   cmd="gcc -c $dirsrc/$file $buildobjs_Parameters  -o $dirbuild/objs/$file.o"
+	   cmd="gcc -c $dirsrclib/$file -c -g -I$dirsrclib -pedantic -Wall -o $dirbuildobjs/$file.o"
 	   echo "    $cmd"
 	   $cmd 
 	   fn_stoponerror "$?" $LINENO
@@ -101,23 +135,23 @@ fn_buildobjs() {
 }
 
 fn_buildexe() {
-    fn_dirEnsureClear "$dirbuild/exe"
+    fn_dirEnsureClear "$dirbuildexe"
     file=$1
 	printf "\n"
 	fn_echobold "    Creating object from \"$file\""
     buildobjs_Parameters=""	
-	cmd="gcc -c $dirsrc/$file -c -g -I$dirsrc -pedantic -Wall -o $dirbuild/exe/$file.o"
+	cmd="gcc -c $dirsrc/$file -c -g -I$dirsrclib -pedantic -Wall -o $dirbuildexe/$file.o"
 	echo $cmd
 	$cmd	
 	fn_stoponerror "$?" $LINENO
 	printf "\n"
 	fn_echobold "    Linking \"$file\""
-	cmd="gcc $dirbuild/objs/*.o $dirbuild/exe/*.o -o $dirbuild/exe/$file.run -lX11"
+	cmd="gcc $dirbuildobjs/*.o $dirbuildexe/*.o -o $dirbuildexe/$file.run -lX11"
 	echo "$cmd"
 	$cmd
 	fn_stoponerror "$?" $LINENO
 	printf "\n"s
-	rm "$dirbuild/exe/$file.o"
+	rm "$dirbuildexe/$file.o"
 }
 
 

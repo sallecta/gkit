@@ -1,10 +1,10 @@
 #include <stk_text.h>
 
 
-stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
+gkit_widget *stk_text_new(gkit_widget *parent_win, int x, int y, uint w, uint h,
                                                         char *label, int type)
 {
-    stk_widget *new_txt  = (stk_widget*) malloc(sizeof(stk_widget));
+    gkit_widget *new_txt  = (gkit_widget*) malloc(sizeof(gkit_widget));
     stk_text *txt = (stk_text*) malloc(sizeof(stk_text));
     int screen;
 
@@ -12,7 +12,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
     long fg, bg;
     XSetWindowAttributes setwinattr;
     
-    memset(new_txt, 0, sizeof(stk_widget));
+    memset(new_txt, 0, sizeof(gkit_widget));
     memset(txt->text, 0, sizeof(stk_text));
     
     new_txt->dsp = display;
@@ -81,7 +81,7 @@ stk_widget *stk_text_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 
 
 
-void stk_text_append(stk_widget *txt, char c)
+void stk_text_append(gkit_widget *txt, char c)
 {
     int len = 0;
 
@@ -97,7 +97,7 @@ void stk_text_append(stk_widget *txt, char c)
 
 
 
-void stk_text_delete(stk_widget *txt)
+void stk_text_delete(gkit_widget *txt)
 {
     int len = 0;
     stk_text *string = (stk_text*)txt->ext_struct;
@@ -112,7 +112,7 @@ void stk_text_delete(stk_widget *txt)
 
 
 
-void stk_text_expose(stk_widget *txt, void *arg)
+void stk_text_expose(gkit_widget *txt, void *arg)
 {
     stk_text *string = (stk_text*)txt->ext_struct;
     int hcenter = ((txt->font_info->descent + txt->font_info->ascent )/2) + (txt->h / 2);
@@ -136,7 +136,7 @@ void stk_text_expose(stk_widget *txt, void *arg)
 
 
 
-void stk_text_set_text(stk_widget *txt, char *string)
+void stk_text_set_text(gkit_widget *txt, char *string)
 {
     int i, len;
     stk_text *extstr = (stk_text*)txt->ext_struct;
@@ -152,7 +152,7 @@ void stk_text_set_text(stk_widget *txt, char *string)
 
 
 
-void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
+void stk_text_keys(gkit_widget *txt, XKeyEvent *event, KeySym *key)
 {
     KeySym keysym = (KeySym)&key;
     char c;
@@ -183,20 +183,20 @@ void stk_text_keys(stk_widget *txt, XKeyEvent *event, KeySym *key)
 }
 
 
-char *stk_text_get_text(stk_widget *txt)
+char *stk_text_get_text(gkit_widget *txt)
 {
     stk_text *string = (stk_text*)txt->ext_struct;
     return string->text;
 }
 
 
-void stk_text_redraw(int dtype, stk_widget *txt, void *args)
+void stk_text_redraw(int dtype, gkit_widget *txt, void *args)
 { 
     
-    STKEvent *ev;
+    GKITEvent *ev;
 
     if(args)
-         ev = (STKEvent*)args;
+         ev = (GKITEvent*)args;
 
     switch(dtype)
     {
@@ -234,9 +234,9 @@ void stk_text_redraw(int dtype, stk_widget *txt, void *args)
 
 
 
-void stk_text_handle(STKEvent *event, void *warg)
+void stk_text_handle(GKITEvent *event, void *warg)
 {
-  stk_widget *wg = (stk_widget*)warg;
+  gkit_widget *wg = (gkit_widget*)warg;
 
     switch(event->type)
     {
@@ -262,13 +262,13 @@ void stk_text_handle(STKEvent *event, void *warg)
             break;
 
         case KeyPress:
-            /*MISSING STK_WIDGET_KEYPRESS */
+            /*MISSING GKIT_EVENT_KEYPRESS */
             stk_text_redraw(STK_TEXT_KEYPRESS, wg, event);
             break;
 
         case KeyRelease:
         
-            /*MISSING STK_WIDGET_KEYRELEASE */
+            /*MISSING GKIT_EVENT_KEYRELEASE */
             stk_text_redraw(STK_TEXT_KEYRELEASE, wg, NULL);
             break;
 

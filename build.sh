@@ -3,18 +3,26 @@
 #configs
 appname="x11gui"
 dirbuild="$PWD/buildout"
+dirbuildobjs="$dirbuild/objs"
+dirbuildexe="$dirbuild/exe"
 dirsrc="$PWD/src"
-dirtests="$PWD/tests"
+dirsrclib="$dirsrc/lib"
+libversionfile="$dirsrclib/version"
+libconfigfile="$dirsrclib/gkit_config.h"
+libplatform="notset"
+libversion="notset"
 #end configs
 
 source "$PWD/build_scripts/_.functions.sh"
 
-objFiles=( "stk_window.c" "stk_text.c" "stk_menu.c" "stk_window.c" "stk_button.c"  \
-"stk_widget.c" "stk_canvas.c" "stk_progress_bar.c" \
+libFiles=( "gkit_window.c" "stk_text.c" "stk_menu.c" "stk_button.c"  \
+"gkit_widget.c" "gkit_widget_canvas.c" "stk_progress_bar.c" \
 )
 
 if [ "$1" = "--linux" ] || [ "$1" = "linux" ]; then
 	if [ "$2" = "--objs" ] || [ "$2" = "objs" ]; then
+	    libplatform="linux"
+		fn_configwrite	
 		fn_buildobjs	
 	elif [ "$2" = "--exe" ] || [ "$2" = "exe" ]; then
 	    fn_stoponfilenotexist "$dirsrc/$3"

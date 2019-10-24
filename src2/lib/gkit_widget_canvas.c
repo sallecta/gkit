@@ -1,16 +1,16 @@
-#include <stk_canvas.h>
+#include <gkit_widget_canvas.h>
 
 
-stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
+gkit_widget *gkit_widget_canvas_new(gkit_widget *parent_win, int x, int y, uint w, uint h)
 {
-    stk_widget *new_pl  = (stk_widget*) malloc(sizeof(stk_widget));
+    gkit_widget *new_pl  = (gkit_widget*) malloc(sizeof(gkit_widget));
     stk_canvas *pl  = (stk_canvas*) malloc(sizeof(stk_canvas));
     int screen, depth;
 
     XGCValues gplal;
     long fg, bg;
     XSetWindowAttributes setwinattr;
-    memset(new_pl, 0, sizeof(stk_widget));
+    memset(new_pl, 0, sizeof(gkit_widget));
     
     
     new_pl->dsp = display;
@@ -56,14 +56,14 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
                        WhitePixelOfScreen(DefaultScreenOfDisplay(new_pl->dsp)));
         XFillRectangle(new_pl->dsp, pl->pmap, new_pl->gc, 0, 0, w, h);
         
-        stk_canvas_set_string_font(new_pl, new_pl->fontname);
+        gkit_widget_canvas_set_string_font(new_pl, new_pl->fontname);
 
         new_pl->x = x;
         new_pl->y = y;
         new_pl->w = w;
         new_pl->h = h;
 
-        new_pl->handler = &stk_canvas_handle;
+        new_pl->handler = &gkit_widget_canvas_handle;
         new_pl->ext_struct = (void*)pl;
 
         stk_widget_insert((void*)new_pl); 
@@ -75,7 +75,7 @@ stk_widget *stk_canvas_new(stk_widget *parent_win, int x, int y, uint w, uint h)
 }
 
 
-void stk_canvas_expose(stk_widget *pl)
+void gkit_widget_canvas_expose(gkit_widget *pl)
 {
     stk_canvas *spl = (stk_canvas*)pl->ext_struct;
 
@@ -84,74 +84,74 @@ void stk_canvas_expose(stk_widget *pl)
 }
 
 
-void stk_canvas_draw_arc(stk_widget *pl, uint x, uint y, uint w, uint h,
+void gkit_widget_canvas_draw_arc(gkit_widget *pl, uint x, uint y, uint w, uint h,
                                                uint angle0, uint angle1)
 {
     stk_canvas *spl = (stk_canvas*)pl->ext_struct;
     XDrawArc(pl->dsp, spl->pmap, pl->gc2, x, y, w, h, angle0, angle1);
-    stk_canvas_expose(pl);
+    gkit_widget_canvas_expose(pl);
 } 
 
 
-void stk_canvas_draw_string(stk_widget *pl, uint x, uint y, char *str)
+void gkit_widget_canvas_draw_string(gkit_widget *pl, uint x, uint y, char *str)
 {
 	stk_canvas *spl = (stk_canvas*)pl->ext_struct;
 	XDrawString(pl->dsp, spl->pmap, pl->gc2, x, y, str, strlen(str));
-	stk_canvas_expose(pl);
+	gkit_widget_canvas_expose(pl);
 }
 
 
-void stk_canvas_draw_line(stk_widget *pl, uint x0, uint y0, uint x1, uint y1)
+void gkit_widget_canvas_draw_line(gkit_widget *pl, uint x0, uint y0, uint x1, uint y1)
 {
     stk_canvas *spl = (stk_canvas*)pl->ext_struct;
     XDrawLine(pl->dsp, spl->pmap, pl->gc2, x0, y0, x1, y1);
-    stk_canvas_expose(pl);
+    gkit_widget_canvas_expose(pl);
 }
 
 
-void stk_canvas_draw_point(stk_widget *pl, uint x, uint y)
+void gkit_widget_canvas_draw_point(gkit_widget *pl, uint x, uint y)
 {
     stk_canvas *spl = (stk_canvas*)pl->ext_struct;
     XDrawPoint(pl->dsp, spl->pmap, pl->gc2, x, y);
-    stk_canvas_expose(pl);
+    gkit_widget_canvas_expose(pl);
 }
 
 
-void stk_canvas_area_rotate(stk_widget *pl, uint x0 , uint y0, uint x1, uint y1,
+void gkit_widget_canvas_area_rotate(gkit_widget *pl, uint x0 , uint y0, uint x1, uint y1,
                                                                      uint angle)
 {
 }             
 
 
-void stk_canvas_set_string_font_size(stk_widget *pl, char *size)
+void gkit_widget_canvas_set_string_font_size(gkit_widget *pl, char *size)
 {
 	stk_widget_set_font_size(pl, size);
 }
 
 
-void stk_canvas_set_string_font(stk_widget *pl, char *font)
+void gkit_widget_canvas_set_string_font(gkit_widget *pl, char *font)
 {
 	stk_widget_set_font_size(pl, font);
 }
 
 
-void stk_canvas_redraw(int dtype, stk_widget *pl)
+void gkit_widget_canvas_redraw(int dtype, gkit_widget *pl)
 { 
     switch(dtype)
     {
-        case STK_CANVAS_EXPOSE:
-            stk_canvas_expose(pl);
+        case gkit_widget_canvas_EXPOSE:
+            gkit_widget_canvas_expose(pl);
             break;
 
-        case STK_CANVAS_PRESS:
+        case gkit_widget_canvas_PRESS:
              break;
 
-        case STK_CANVAS_RELEASE:
+        case gkit_widget_canvas_RELEASE:
              break;
 
-        case STK_CANVAS_ENTER:
-        case STK_CANVAS_LEAVE:
-        case STK_CANVAS_MOVE:
+        case gkit_widget_canvas_ENTER:
+        case gkit_widget_canvas_LEAVE:
+        case gkit_widget_canvas_MOVE:
         default:
             break;
     }
@@ -159,9 +159,9 @@ void stk_canvas_redraw(int dtype, stk_widget *pl)
 
 
 
-void stk_canvas_handle(STKEvent *event, void *warg)
+void gkit_widget_canvas_handle(STKEvent *event, void *warg)
 {
-    stk_widget *wg = (stk_widget*)warg;
+    gkit_widget *wg = (gkit_widget*)warg;
     
     wg->ev  = event;
     
@@ -170,7 +170,7 @@ void stk_canvas_handle(STKEvent *event, void *warg)
     case Expose:
         if(wg->exposefunc)
             wg->exposefunc(wg->exargs);
-        stk_canvas_redraw(STK_CANVAS_EXPOSE, wg);
+        gkit_widget_canvas_redraw(gkit_widget_canvas_EXPOSE, wg);
         break;
     
     case EnterNotify:

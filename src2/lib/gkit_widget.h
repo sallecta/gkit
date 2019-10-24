@@ -14,7 +14,7 @@
 
 
 
-/* STK_WIDGET Events */
+/* gkit_widget Events */
 #define STK_WIDGET_EXPOSE     0x10
 #define STK_WIDGET_PRESS      0x20
 #define STK_WIDGET_RELEASE    0x30
@@ -60,25 +60,25 @@ typedef struct
     void (*releasefunc)(void *),  *rargs;  /* realse event     */
     void (*kpressfunc)(void *),   *kpxargs;/* keypress event   */
     void (*kreleasefunc)(void *), *krargs; /* keyrelease event */
- } stk_widget;
+ } gkit_widget;
 
 /* Font Sizes */
 #define STK_FONT_SIZE_6x9   "6x9"
 #define STK_FONT_SIZE_7x13  "7x13"
 #define STK_FONT_SIZE_9x15  "9x15"
 
-stk_widget *stk_widget_search(void *);
+gkit_widget *stk_widget_search(void *);
 int         stk_widget_insert(void *);
 int         stk_widget_delete(void *);
 void        stk_init();
 void        stk_run();
-void        stk_widget_set_size(stk_widget *, uint, uint);
-void        stk_widget_set_pos(stk_widget *, uint, uint);
-void        stk_widget_set_color(stk_widget *, int color);
-void        stk_widget_set_font_size(stk_widget *, char *);
-stk_widget *stk_widget_root();
-void        stk_widget_event_listen_add(stk_widget *, int, 
+void        stk_widget_set_size(gkit_widget *, uint, uint);
+void        stk_widget_set_pos(gkit_widget *, uint, uint);
+void        stk_widget_set_color(gkit_widget *, int color);
+void        stk_widget_set_font_size(gkit_widget *, char *);
+gkit_widget *stk_widget_root();
+void        gkit_widget_event_listen_add(gkit_widget *, int, 
                                   void (*)(void*),void *);
-void        stk_widget_event_listen_remove(stk_widget *, int);
+void        stk_widget_event_listen_remove(gkit_widget *, int);
 
 #endif /* STK_WIDGET_H */

@@ -2,12 +2,12 @@
 #include <stk_button.h>
 
 
-stk_widget *stk_menu_new(stk_widget *parent_win, int x, int y, uint w, uint h,
+gkit_widget *stk_menu_new(gkit_widget *parent_win, int x, int y, uint w, uint h,
                                                                   char *title)
 {
-    stk_widget *new_menu  = (stk_widget*) malloc(sizeof(stk_widget));
+    gkit_widget *new_menu  = (gkit_widget*) malloc(sizeof(gkit_widget));
     
-    memset(new_menu, 0, sizeof(stk_widget));
+    memset(new_menu, 0, sizeof(gkit_widget));
     
     new_menu->dsp = display;
 
@@ -44,12 +44,12 @@ stk_widget *stk_menu_new(stk_widget *parent_win, int x, int y, uint w, uint h,
 }
 
 /*
-void stk_menu_set_pos(stk_widget *menu, uint x, uint y)
+void stk_menu_set_pos(gkit_widget *menu, uint x, uint y)
 {
   stk_widget_set_pos(win, x, y);
 }    
 
-void stk_menu_set_color(stk_widget *menu, int color)
+void stk_menu_set_color(gkit_widget *menu, int color)
 {
     stk_widget_set_color(win, color);
 }
@@ -57,7 +57,7 @@ void stk_menu_set_color(stk_widget *menu, int color)
 
 void stk_menu_handle(STKEvent *event, void *warg)
 {
-    stk_widget *wg = (stk_widget*)warg;
+    gkit_widget *wg = (gkit_widget*)warg;
 
     switch(event->type)
     {
@@ -80,7 +80,7 @@ void stk_menu_handle(STKEvent *event, void *warg)
     }
 }
 
-void stk_menu_show(stk_widget *menu)
+void stk_menu_show(gkit_widget *menu)
 {
     XMapWindow(menu->dsp, menu->win);
     XFlush(menu->dsp);

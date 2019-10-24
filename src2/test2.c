@@ -119,8 +119,8 @@ int main()
     cv  = gkit_widget_canvas_new(win, 80, 230, 700, 350);
     bt7 = stk_button_new(win, 400, 200, 60, 20, "CanvasBt", &draw, (void*)cv);
     
-    gkit_widget_event_listen_add(cv, GKIT_EVENT_MOVE, listen, (void*)cv);
-    gkit_widget_event_listen_add(cv, GKIT_EVENT_PRESS, listen, (void*)cv);
+    gkit_widget_event_listen_add(cv, STK_WIDGET_MOVE, listen, (void*)cv);
+    gkit_widget_event_listen_add(cv, STK_WIDGET_PRESS, listen, (void*)cv);
 
     stk_text_set_text(txt, "Oba!!!");
     gkit_widget_canvas_draw_arc(cv, 50, 70, 150, 150, 10, 360*64);

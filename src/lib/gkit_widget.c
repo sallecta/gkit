@@ -1,7 +1,7 @@
 /*!
 
 */
-#include <stk_widget.h>
+#include <gkit_widget.h>
 
 widget_list *list;
 
@@ -56,12 +56,12 @@ int stk_widget_delete(void *widget)
 /*!
 @brief Searchs for a widget in the widget list.
 @param widget The widget to be located on the list.
-@return Returns a pointer to stk_widget or NULL
+@return Returns a pointer to gkit_widget or NULL
 */
-stk_widget *stk_widget_search(void *widget)
+gkit_widget *stk_widget_search(void *widget)
 {
     widget_list *node = list;
-    stk_widget *wnode = NULL;
+    gkit_widget *wnode = NULL;
 
 
     if(node ==  NULL)
@@ -70,7 +70,7 @@ stk_widget *stk_widget_search(void *widget)
     {
         while(node)
         {
-            wnode = (stk_widget*)node->this;
+            wnode = (gkit_widget*)node->this;
             if(wnode->win == (Window)widget)
                 return wnode;
             else
@@ -91,9 +91,9 @@ the event callings of the widgets.
 */
 void stk_run()
 {
-    STKEvent event;
+    GKITEvent event;
     widget_list *node = list;
-    stk_widget *wnode = NULL;
+    gkit_widget *wnode = NULL;
 
     if(node ==  NULL)
         printf("Empty list\n");
@@ -112,37 +112,37 @@ void stk_run()
 
 
 
-void stk_widget_event_listen_add(stk_widget *win, int event_type,
+void gkit_widget_event_listen_add(gkit_widget *win, int event_type,
                                  void (*func)(void*), void *args)
 {
     switch(event_type)
     {
-        case STK_WIDGET_MOVE:
+        case GKIT_EVENT_MOVE:
             win->movefunc = func;
             win->margs = args;
             break;
             
-        case STK_WIDGET_PRESS:
+        case GKIT_EVENT_PRESS:
             win->pressfunc = func;
             win->pargs = args;
             break;
             
-        case STK_WIDGET_EXPOSE:
+        case GKIT_EVENT_EXPOSE:
             win->exposefunc = func;
             win->exargs = args;
             break;
             
-        case STK_WIDGET_LEAVE:
+        case GKIT_EVENT_LEAVE:
             win->leavefunc = func;
             win->largs = args;
             break;
             
-        case STK_WIDGET_ENTER:
+        case GKIT_EVENT_ENTER:
             win->enterfunc = func;
             win->eargs = args;
             break;
             
-        case STK_WIDGET_RELEASE:
+        case GKIT_EVENT_RELEASE:
             win->releasefunc = func;
             win->rargs = args;
             break;
@@ -151,43 +151,43 @@ void stk_widget_event_listen_add(stk_widget *win, int event_type,
 
 
 
-void stk_widget_event_listen_remove(stk_widget *win, int event_type)
+void stk_widget_event_listen_remove(gkit_widget *win, int event_type)
 {
     switch(event_type)
     {
-        case STK_WIDGET_MOVE:
+        case GKIT_EVENT_MOVE:
             win->movefunc = NULL;
             win->margs = NULL;
             break;
             
-        case STK_WIDGET_PRESS:
+        case GKIT_EVENT_PRESS:
             win->pressfunc = NULL;
             win->pargs = NULL;
             break;
             
-        case STK_WIDGET_EXPOSE:
+        case GKIT_EVENT_EXPOSE:
             win->exposefunc = NULL;
             win->exargs = NULL;
             break;
             
-        case STK_WIDGET_LEAVE:
+        case GKIT_EVENT_LEAVE:
             win->leavefunc = NULL;
             win->largs = NULL;
             break;
             
-        case STK_WIDGET_ENTER:
+        case GKIT_EVENT_ENTER:
             win->enterfunc = NULL;
             win->eargs = NULL;
             break;
             
-        case STK_WIDGET_RELEASE:
+        case GKIT_EVENT_RELEASE:
             win->releasefunc = NULL;
             win->rargs = NULL;
             break;
     }
 }
 
-void stk_widget_set_size(stk_widget *win, uint w, uint h)
+void stk_widget_set_size(gkit_widget *win, uint w, uint h)
 {
     XResizeWindow(win->dsp, win->win, w, h);
 }
@@ -196,15 +196,15 @@ void stk_widget_set_size(stk_widget *win, uint w, uint h)
 @brief returns the first widget created
 @return The pointer to the first widget added on the list
 */
-stk_widget *stk_widget_root()
+gkit_widget *stk_widget_root()
 {
     widget_list *node = list;
-    stk_widget *wnode = NULL;
+    gkit_widget *wnode = NULL;
 
     while(node)
     {
 
-        wnode = (stk_widget*)node->this;
+        wnode = (gkit_widget*)node->this;
         node = node->next;
     }
     return wnode;
@@ -213,7 +213,7 @@ stk_widget *stk_widget_root()
 /*! 
 @brief set widget position on the screen
 */
-void stk_widget_set_pos(stk_widget *win, uint x, uint y)
+void stk_widget_set_pos(gkit_widget *win, uint x, uint y)
 {
     XMoveWindow(win->dsp, win->win, x, y);   
 }
@@ -221,7 +221,7 @@ void stk_widget_set_pos(stk_widget *win, uint x, uint y)
 /*! 
 @brief set widget color
 */
-void stk_widget_set_color(stk_widget *win, int color)
+void stk_widget_set_color(gkit_widget *win, int color)
 {
     XSetWindowBackground(win->dsp, win->win, color);
     XClearWindow(win->dsp, win->win);
@@ -229,7 +229,7 @@ void stk_widget_set_color(stk_widget *win, int color)
 }
 
 
-void stk_widget_set_font_size(stk_widget *win, char *str_size)
+void stk_widget_set_font_size(gkit_widget *win, char *str_size)
 {
     win->font_info = XLoadQueryFont(win->dsp, str_size);
 

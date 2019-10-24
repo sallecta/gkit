@@ -1,7 +1,7 @@
 #ifndef STK_PROGRESS_BAR_H
 #define STK_PROGRESS_BAR_H
 
-#include <stk_widget.h>
+#include <gkit_widget.h>
 
 /* STKButton Events */
 #define STK_PROGRESS_BAR_EXPOSE   0x10
@@ -22,11 +22,11 @@ typedef struct
 } stk_progress_bar;
 
 
-stk_widget *stk_progress_bar_new(stk_widget *, int, int, uint, uint, char *);
+gkit_widget *stk_progress_bar_new(gkit_widget *, int, int, uint, uint, char *);
 void        stk_progress_bar_handle(STKEvent *, void *);
-void        stk_progress_bar_set(stk_widget *, uint);
-void        stk_progress_bar_set_value(stk_widget *, uint);
-void        stk_progress_bar_set_label(stk_widget *, char *);
-uint        stk_progress_bar_get_value(stk_widget *);
+void        stk_progress_bar_set(gkit_widget *, uint);
+void        stk_progress_bar_set_value(gkit_widget *, uint);
+void        stk_progress_bar_set_label(gkit_widget *, char *);
+uint        stk_progress_bar_get_value(gkit_widget *);
 
 #endif /* STK_PROGRESS_BAR_H */

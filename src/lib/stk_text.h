@@ -1,7 +1,7 @@
 #ifndef STK_TEXT_H
 #define STK_TEXT_H
 
-#include <stk_widget.h>
+#include <gkit_widget.h>
 
 /* STKText Events */
 #define STK_TEXT_EXPOSE      0x10
@@ -28,10 +28,10 @@ typedef struct
     char text[STK_TEXT_BUFFER_SIZE];
 } stk_text;
 
-stk_widget *stk_text_new(stk_widget *, int, int, uint, uint, char *, int);
-void        stk_text_handle(STKEvent *, void *);
-void        stk_text_redraw(int, stk_widget *, void *);
-char       *stk_text_get_text(stk_widget *);
-void        stk_text_set_text(stk_widget *, char *);
+gkit_widget *stk_text_new(gkit_widget *, int, int, uint, uint, char *, int);
+void        stk_text_handle(GKITEvent *, void *);
+void        stk_text_redraw(int, gkit_widget *, void *);
+char       *stk_text_get_text(gkit_widget *);
+void        stk_text_set_text(gkit_widget *, char *);
 
 #endif /* STK_TEXT_H */
