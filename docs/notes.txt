@@ -1,0 +1,11 @@
+make[1]: Entering directory '/home/user/Загрузки/stk-master/src'
+gcc -c -o stk_text.o stk_text.c -c -g -I. -pedantic -Wall 
+gcc -c -o stk_menu.o stk_menu.c -c -g -I. -pedantic -Wall 
+gcc -c -o stk_window.o stk_window.c -c -g -I. -pedantic -Wall 
+gcc -c -o stk_button.o stk_button.c -c -g -I. -pedantic -Wall 
+gcc -c -o test-canvasonly.o test-canvasonly.c -c -g -I. -pedantic -Wall 
+gcc -c -o stk_widget.o stk_widget.c -c -g -I. -pedantic -Wall 
+gcc -c -o stk_canvas.o stk_canvas.c -c -g -I. -pedantic -Wall 
+gcc -c -o stk_progress_bar.o stk_progress_bar.c -c -g -I. -pedantic -Wall 
+gcc *.o -o test -lX11
+make[1]: Leaving directory '/home/user/Загрузки/stk-master/src'

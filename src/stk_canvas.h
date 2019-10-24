@@ -1,7 +1,7 @@
 #ifndef STK_CANVAS_H
 #define STK_CANVAS_H
 
-#include <stk_widget.h>
+#include "stk_widget.h"
 
 /* STKCanvas Events */
 #define STK_CANVAS_EXPOSE   0x10
