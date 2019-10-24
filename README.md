@@ -24,7 +24,6 @@ gkit is a small Graphical toolkit for desktop applications.
 
 
 ## Widget list
-
 * Window
 * Button
 * Text Input/Output - still need some changes/improvements
